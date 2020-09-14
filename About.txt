@@ -16,3 +16,7 @@ snake
     │   └── constants.py     - multiple constants storage for their convenient usage.
     │
     └── interactor.py        - script to allow you playing Snake manually.
+
+
+Сдать змейку за 1 день без СМС и регистрации
+https://app.slack.com/docs/TS55B0QSZ/F01977P4N3C?origin_team=TS55B0QSZ&origin_channel=C017E3H1FGF
