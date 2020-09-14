@@ -1,4 +1,5 @@
 Snake game using RL
+https://github.com/DataRootUniversity/ds-fundamentals/blob/master/snake-project/DOC.md
 
 snake
     ├── env                  - contains files with environmental elements.
