@@ -14,13 +14,16 @@ class Snake:
         self.snake_block = SNAKE_BLOCK  # snake identification?
         self.current_direction_index = direction_index  # 0-3 (u, r, d, l)
 
-        self.alive = True # Alive identifier
+        self.alive = True  # Alive identifier
 
         # Place the snake
-        self.blocks = [head_position]
-        current_position = np.array(head_position)
+        self.blocks = [head_position]  # blocks is a snake body. Init by head
+        current_position = None
+        # building the snake body:
+        # 1. Take the last position
+        # 2. Add to it direction
+        # 3. Add it to body at the end
         for i in range(1, length):
-            # Direction inverse of moving
             current_position = current_position - DIRECTIONS[self.current_direction_index]
             self.blocks.append(tuple(current_position))
 
@@ -31,13 +34,16 @@ class Snake:
         @param return: tuple, tuple
         """
         # Check if action can be performed (do nothing if in the same direction or opposite)
-        if (self.alive) and ():
+        if (self.current_direction_index != action) and (self.current_direction_index != [-k for k in action]):
             self.current_direction_index = action
+
         # Remove tail
-        tail =
-        self.blocks =
+        tail = self.blocks[len(self.blocks)]
+        self.blocks = self.blocks[:len(self.blocks) - 1]
+
         # Check new head
-        new_head =
+        new_head = self.blocks[0] + DIRECTIONS[self.current_direction_index]
+        
         # Add new head
         self.blocks = [new_head] + self.blocks
         return new_head, tail
