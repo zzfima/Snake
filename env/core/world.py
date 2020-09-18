@@ -117,28 +117,30 @@ class World(object):
 
         # check if snake is alive
         if self.snake.alive:
-            # perform a step (from Snake class)
+            # perform a step
             new_snake_head, old_snake_tail = self.snake.step(action)
 
             # Check if snake is outside bounds
             world_bounds = self.world.shape
-            if new_snake_head[0] > world_bounds[0] or new_snake_head[1] > world_bounds[1]:
+            if new_snake_head[0] >= world_bounds[0] or new_snake_head[1] >= world_bounds[1]:
                 self.snake.alive = False
             
             # Check if snake eats itself
-            elif new_snake_head in self.snake.blocks:
+            elif new_snake_head in self.snake.blocks[1:]:
                 self.snake.alive = False
             
             # Check if snake eats the food
             if new_snake_head == self.food_position:
+
                 # Remove old food
-                self.available_food_positions.remove(new_snake_head)
-                
+
                 # Add tail again
                 self.snake.blocks = self.snake.blocks + [old_snake_tail]
 
                 # Request to place new food
-                new_food_needed = random.choice(self.available_food_positions)
+                new_food_needed = True
+
+                # Add reward
                 reward = self.EAT_REWARD
             elif self.snake.alive:
                 # Didn't eat anything, move reward
