@@ -23,7 +23,7 @@ class Snake:
         # 1. Take the last position
         # 2. Add to it direction
         # 3. Add it to body at the end
-        for i in range(1, length):
+        for _ in range(1, length):
             current_position = current_position - DIRECTIONS[self.current_direction_index]
             self.blocks.append(tuple(current_position))
 
@@ -34,7 +34,9 @@ class Snake:
         @param return: tuple, tuple
         """
         # Check if action can be performed (do nothing if in the same direction or opposite)
-        if (self.current_direction_index != action) and (self.current_direction_index != [-k for k in action]):
+        cu = self.current_direction_index
+
+        if ((cu == 0 or cu == 3) and action != 0 and action != 3) and ((cu == 1 or cu == 2) and action != 1 and action != 2):
             self.current_direction_index = action
 
         # Remove tail
