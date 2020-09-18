@@ -61,7 +61,8 @@ class World(object):
 
             # choose a random direction index
             start_direction_index = random.choice(DIRECTIONS)
-            new_snake = Snake(start_position, start_direction_index, SNAKE_SIZE)
+            new_snake = Snake(
+                start_position, start_direction_index, SNAKE_SIZE)
         else:
             new_snake = Snake(self.start_position, self.start_direction_index, SNAKE_SIZE)
         return new_snake
@@ -127,21 +128,26 @@ class World(object):
                 self.snake.alive = False
             
             # Check if snake eats the food
-            if :
+            if new_snake_head == self.food_position:
                 # Remove old food
+                del self.available_food_positions.remove(new_snake_head)
                 
                 # Add tail again
-                
+                self.snake.blocks = self.snake.blocks + [old_snake_tail]
+
                 # Request to place new food
-                new_food_needed = 
-                reward = 
+                new_food_needed = random.choice(self.available_food_positions)
+                reward = self.EAT_REWARD
             elif self.snake.alive:
                 # Didn't eat anything, move reward
                 reward = self.MOVE_REWARD
+                
         # Compute done flag and assign dead reward
         done = not self.snake.alive
         reward = reward if self.snake.alive else self.DEAD_REWARD
+        
         # Adding new food
         if new_food_needed:
             self.init_food()
+        
         return reward, done, self.snake.blocks

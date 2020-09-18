@@ -1,5 +1,4 @@
 import numpy as np
-
 from settings.constants import DIRECTIONS, SNAKE_BLOCK
 
 
