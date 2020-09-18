@@ -17,7 +17,7 @@ class Snake:
 
         # Place the snake
         self.blocks = [head_position]  # blocks is a snake body. Init by head
-        current_position = None
+        current_position = np.array(head_position)
         # building the snake body:
         # 1. Take the last position
         # 2. Add to it direction
