@@ -57,7 +57,7 @@ class World(object):
         """
         if not self.custom:
             # choose a random position between [SNAKE_SIZE and SIZE - SNAKE_SIZE]
-            start_position = np.random.randint(SNAKE_SIZE, self.size - SNAKE_SIZE)
+            start_position = np.random.randint(self.size)
 
             # choose a random direction index
             start_direction_index = random.choice(DIRECTIONS)
@@ -75,7 +75,7 @@ class World(object):
         # Update available positions for food placement considering snake location
         available_food_positions = self.available_food_positions.copy()
         for i in self.snake.blocks:
-            available_food_positions.remove(i)
+            available_food_positions.remove(tuple(i))
         if not self.custom:
             # Choose a random position from available
             chosen_position = random.choice(tuple(available_food_positions))
