@@ -15,7 +15,7 @@ def interact():
     done = False
     r = 0
     action = random.randrange(4)
-    delay_time = 0.2
+    delay_time = 0.5
 
     # After the first run of the method env.render()
     # env.renderer.viewer obtains an attribute 'window'
