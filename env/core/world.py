@@ -57,10 +57,10 @@ class World(object):
         """
         if not self.custom:
             # choose a random position between [SNAKE_SIZE and SIZE - SNAKE_SIZE]
-            start_position = np.random.randint(self.size)
+            start_position = [random.choice(range(self.size[0])), random.choice(range(self.size[0]))]
 
             # choose a random direction index
-            start_direction_index = random.choice(DIRECTIONS)
+            start_direction_index = random.choice(range(len(DIRECTIONS)))
             new_snake = Snake(
                 start_position, start_direction_index, SNAKE_SIZE)
         else:
