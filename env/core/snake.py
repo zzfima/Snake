@@ -23,7 +23,14 @@ class Snake:
         # 2. Add to it direction
         # 3. Add it to body at the end
         for _ in range(1, length):
-            current_position = current_position - DIRECTIONS[self.current_direction_index]
+            if self.current_direction_index == 0:
+                current_position = [current_position[0], current_position[1] + 1]
+            elif self.current_direction_index == 1:
+                current_position = [current_position[0] - 1, current_position[1]]
+            elif self.current_direction_index == 2:
+                current_position = [current_position[0], current_position[1] - 1]
+            elif self.current_direction_index == 3:
+                current_position = [current_position[0] + 1, current_position[1]]
             self.blocks.append(tuple(current_position))
 
     def step(self, action):
@@ -35,15 +42,22 @@ class Snake:
         # Check if action can be performed (do nothing if in the same direction or opposite)
         cu = self.current_direction_index
 
-        if ((cu == 0 or cu == 3) and action != 0 and action != 3) and ((cu == 1 or cu == 2) and action != 1 and action != 2):
+        if ((cu == 0 or cu == 2) and (action == 1 or action == 3)) or ((cu == 0 or cu == 2) and (action == 1 or action == 3)):
             self.current_direction_index = action
 
         # Remove tail
-        tail = self.blocks[len(self.blocks)]
+        tail = self.blocks[len(self.blocks) - 1]
         self.blocks = self.blocks[:len(self.blocks) - 1]
 
         # Check new head
-        new_head = self.blocks[0] + DIRECTIONS[self.current_direction_index]
+        if self.current_direction_index == 0:
+            new_head = (self.blocks[0][0], self.blocks[0][1] - 1)
+        elif self.current_direction_index == 1:
+            new_head = (self.blocks[0][0] + 1, self.blocks[0][1])
+        elif self.current_direction_index == 2:
+            new_head = (self.blocks[0][0], self.blocks[0][1] + 1)
+        elif self.current_direction_index == 3:
+            new_head = (self.blocks[0][0] - 1, self.blocks[0][1])
         
         # Add new head
         self.blocks = [new_head] + self.blocks
