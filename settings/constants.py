@@ -9,6 +9,7 @@ SNAKE_SIZE = 3  # initial size of the snake
 WALL = 255
 FOOD_BLOCK = 64
 SNAKE_BLOCK = 100
+EMPTY_BLOCK = 0
 
 # DIRECTIONS:
 #     0: UP

@@ -4,7 +4,7 @@ import numpy as np
 import random
 
 from settings.constants import DIRECTIONS, SNAKE_SIZE, DEAD_REWARD, \
-    MOVE_REWARD, EAT_REWARD, FOOD_BLOCK, WALL
+    MOVE_REWARD, EAT_REWARD, FOOD_BLOCK, WALL, EMPTY_BLOCK
 from .snake import Snake
 
 
@@ -47,7 +47,7 @@ class World(object):
         self.world[range(self.size[1] - 1), self.size[0] - 1] = self.WALL
 
         # Get available positions for placing food (choose all positions where world block = 0)
-        self.available_food_positions = set(zip(*np.where(self.world == 0)))
+        self.available_food_positions = set(zip(*np.where(self.world == EMPTY_BLOCK)))
 
         # Init snake
         self.snake = self.init_snake()
@@ -77,23 +77,27 @@ class World(object):
         """
         snake = self.snake if self.snake.alive else None
         # Update available positions for food placement considering snake location
-        available_food_positions = self.available_food_positions.copy()
+        self.available_food_positions = set(zip(*np.where(self.world == EMPTY_BLOCK)))
         for i in self.snake.blocks:
-            available_food_positions.remove(tuple(i))
+            self.available_food_positions.remove(tuple(i))
+
         if not self.custom:
             # Choose a random position from available
-            chosen_position = random.choice(tuple(available_food_positions))
+            chosen_position = random.choice(tuple(self.available_food_positions))
         else:
-            chosen_position = self.food_position
+            if self.food_position not in self.snake.blocks:
+                chosen_position = self.food_position
+            else:
+                chosen_position = random.choice(tuple(self.available_food_positions))
             # Code needed for checking your project. Just leave it as it is
             try:
-                available_food_positions.remove(chosen_position)
+                self.available_food_positions.remove(chosen_position)
             except:
-                if (self.food_position[0] - 1, self.food_position[1]) in available_food_positions:
+                if (self.food_position[0] - 1, self.food_position[1]) in self.available_food_positions:
                     chosen_position = (self.food_position[0] - 1, self.food_position[1])
                 else:
                     chosen_position = (self.food_position[0] - 1, self.food_position[1] + 1)
-                available_food_positions.remove(chosen_position)
+                self.available_food_positions.remove(chosen_position)
         self.world[chosen_position[0], chosen_position[1]] = self.FOOD
 
     def get_observation(self):
@@ -136,7 +140,7 @@ class World(object):
             if new_snake_head == self.food_position:
 
                 # Remove old food
-                self.food_position = None
+                self.world[self.food_position] = EMPTY_BLOCK
 
                 # Add tail again
                 self.snake.blocks = self.snake.blocks + [old_snake_tail]
