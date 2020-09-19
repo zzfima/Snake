@@ -99,11 +99,10 @@ class SnakeEnv(gym.Env):
                 self.renderer = Renderer(size=self.SIZE, zoom_factor=self.RENDER_ZOOM)
             return self.renderer.render(self.world.get_observation(), mode=mode, close=False)
 
-        def close(self):
-            """
-            Close rendering
-            """
-
+    def close(self):
+        """
+        Close rendering
+        """
         if self.renderer:
             self.renderer.close()
             self.renderer = None
