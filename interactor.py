@@ -1,4 +1,3 @@
-# script to allow you playing Snake manually
 import random
 import time
 
