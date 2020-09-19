@@ -45,7 +45,7 @@ def interact():
             r += reward
             # Speeding up snake after eating food
             delay_time -= 1 / 6 * delay_time
-
+    env.close()
     return r
 
 
