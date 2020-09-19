@@ -62,14 +62,14 @@ class SnakeEnv(gym.Env):
         """
         # Check if game is ended
         if not self.alive:
-            return None
+            return None, None, True, None
 
         # Perform the action
         reward, done, snake = self.world.move_snake(action)
 
         # Disable interactions if snake dead
         if done:
-            return None
+            return None, reward, done, snake
 
         return self.world.get_observation(), reward, done, snake
 
