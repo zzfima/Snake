@@ -125,8 +125,7 @@ class World(object):
             new_snake_head, old_snake_tail = self.snake.step(action)
 
             # Check if snake is outside bounds
-            world_bounds = self.world.shape
-            if new_snake_head[0] >= world_bounds[0] or new_snake_head[1] >= world_bounds[1]:
+            if self.world[new_snake_head] == WALL:
                 self.snake.alive = False
             
             # Check if snake eats itself

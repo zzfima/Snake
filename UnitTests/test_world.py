@@ -64,10 +64,6 @@ def test_world_move_snake_outside_bounds():
     assert done is False
     assert reward == 0
     reward, done, snake_blocks = word.move_snake(2)
-    assert word.snake.alive is True
-    assert done is False
-    assert reward == 0
-    reward, done, snake_blocks = word.move_snake(2)
     assert word.snake.alive is False
     assert done is True
     assert reward == -1
