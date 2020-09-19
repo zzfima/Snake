@@ -29,9 +29,12 @@ class Snake:
         @param return: tuple, tuple
         """
         # Check if action can be performed (do nothing if in the same direction or opposite)
-        print(f'current_direction_index = {self.current_direction_index}')
+        print(f'current_direction_index = {self.current_direction_index}, action = {action}')
+        ci = self.current_direction_index
 
-        self.current_direction_index = action
+        if ((ci == 1 or ci == 3) and (action == 2 or action == 0)) or \
+                ((ci == 2 or ci == 0) and (action == 1 or action == 3)):
+            self.current_direction_index = action
 
         # Remove tail
         tail = self.blocks[len(self.blocks) - 1]
