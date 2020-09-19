@@ -37,10 +37,14 @@ class World(object):
         self.world = np.zeros(size)
 
         # Fill in the indexes gaps to add walls to the grid world
-        # self.world[0] = self.WALL
-        # self.world[0] = self.WALL
-        # self.world[0] = self.WALL
-        # self.world[0] = self.WALL
+        # upper horizontal line
+        self.world[0] = self.WALL
+        # bottom horizontal line
+        self.world[self.size[1] - 1] = self.WALL
+        # vertical left side
+        self.world[range(self.size[1] - 1), 0] = self.WALL
+        # vertical right side
+        self.world[range(self.size[1] - 1), self.size[0] - 1] = self.WALL
 
         # Get available positions for placing food (choose all positions where world block = 0)
         self.available_food_positions = set(zip(*np.where(self.world == 0)))
