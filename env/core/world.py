@@ -136,6 +136,7 @@ class World(object):
             if new_snake_head == self.food_position:
 
                 # Remove old food
+                self.food_position = None
 
                 # Add tail again
                 self.snake.blocks = self.snake.blocks + [old_snake_tail]
