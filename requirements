@@ -13,6 +13,7 @@ packaging==20.4
 pluggy==0.13.1
 py==1.9.0
 pycodestyle==2.6.0
+pyglet==1.5.7
 pylint==2.6.0
 pyparsing==2.4.7
 pytest==6.0.2
