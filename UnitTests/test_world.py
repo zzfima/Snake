@@ -86,6 +86,7 @@ def test_world_move_snake_eat_food():
     assert word.snake.alive is True
     assert done is False
     assert reward == 1
+    reward, done, snake_blocks = word.move_snake(1)
 
 
 def test_world_move_snake_enter_upper_wall():

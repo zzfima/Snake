@@ -1,7 +1,8 @@
 # grid world properties
 
-import numpy as np
 import random
+
+import numpy as np
 
 from settings.constants import DIRECTIONS, SNAKE_SIZE, DEAD_REWARD, \
     MOVE_REWARD, EAT_REWARD, FOOD_BLOCK, WALL, EMPTY_BLOCK
@@ -80,27 +81,22 @@ class World(object):
         """
         snake = self.snake if self.snake.alive else None
         # Update available positions for food placement considering snake location
-        self.available_food_positions = set(zip(*np.where(self.world == EMPTY_BLOCK)))
-        for i in self.snake.blocks:
-            self.available_food_positions.remove(tuple(i))
+        available_food_positions = [x for x in self.available_food_positions if x not in self.snake.blocks]
 
         if not self.custom:
             # Choose a random position from available
-            chosen_position = random.choice(tuple(self.available_food_positions))
+            chosen_position = random.choice(tuple(available_food_positions))
         else:
-            if self.food_position not in self.snake.blocks:
-                chosen_position = self.food_position
-            else:
-                chosen_position = random.choice(tuple(self.available_food_positions))
+            chosen_position = self.food_position
             # Code needed for checking your project. Just leave it as it is
             try:
-                self.available_food_positions.remove(chosen_position)
+                available_food_positions.remove(chosen_position)
             except:
-                if (self.food_position[0] - 1, self.food_position[1]) in self.available_food_positions:
+                if (self.food_position[0] - 1, self.food_position[1]) in available_food_positions:
                     chosen_position = (self.food_position[0] - 1, self.food_position[1])
                 else:
                     chosen_position = (self.food_position[0] - 1, self.food_position[1] + 1)
-                self.available_food_positions.remove(chosen_position)
+                available_food_positions.remove(chosen_position)
         self.world[chosen_position[0], chosen_position[1]] = self.FOOD
 
     def get_observation(self):
@@ -134,11 +130,11 @@ class World(object):
             # Check if snake is outside bounds
             if self.world[new_snake_head] == WALL:
                 self.snake.alive = False
-            
+
             # Check if snake eats itself
             elif new_snake_head in self.snake.blocks[1:]:
                 self.snake.alive = False
-            
+
             # Check if snake eats the food
             if new_snake_head == np.where(self.world == self.FOOD):
 
@@ -156,13 +152,13 @@ class World(object):
             elif self.snake.alive:
                 # Didn't eat anything, move reward
                 reward = self.MOVE_REWARD
-                
+
         # Compute done flag and assign dead reward
         done = not self.snake.alive
         reward = reward if self.snake.alive else self.DEAD_REWARD
-        
+
         # Adding new food
         if new_food_needed:
             self.init_food()
-        
+
         return reward, done, self.snake.blocks
