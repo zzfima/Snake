@@ -40,6 +40,7 @@ def interact():
     while not done:
         time.sleep(delay_time)
         obs, reward, done, info = env.step(action)
+        print(f'snake length: {len(info)}')
         env.render(mode='human')
         if reward:
             r += reward
